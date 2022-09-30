@@ -1,21 +1,30 @@
-def partition(array,low,high):
-    pivot=array[high]
-    i=low-1
-    for j in range(low,high):
-        if array[j]<=pivot:
-            i=i+1
-            (array[i],array[j])=(array[j],array[i])
-        (array[i+1],array[high])=(array[high],array[i+1])
-        return i+1
-def quicksort(array,low,high):
-    if low<high:
-        pi=partition(array,low,high)
-        quicksort(array,low,pi-1)
-        quicksort(array,pi+1,high)
-data=[8,9,7,0,4]
-print("unsorted array")
-print(data)
-size=len(data)
-quicksort(data,0,size-1)
-print("sorted array in ascanding order:")
-print(data)  
+def partition(l, r, nums):
+    # Last element will be the pivot and the first element the pointer
+    pivot, ptr = nums[r], l
+    for i in range(l, r):
+        if nums[i] <= pivot:
+            # Swapping values smaller than the pivot to the front
+            nums[i], nums[ptr] = nums[ptr], nums[i]
+            ptr += 1
+    # Finally swapping the last element with the pointer indexed number
+    nums[ptr], nums[r] = nums[r], nums[ptr]
+    return ptr
+ 
+# With quicksort() function, we will be utilizing the above code to obtain the pointer
+# at which the left values are all smaller than the number at pointer index and vice versa
+# for the right values.
+ 
+ 
+def quicksort(l, r, nums):
+    if len(nums) == 1:  # Terminating Condition for recursion. VERY IMPORTANT!
+        return nums
+    if l < r:
+        pi = partition(l, r, nums)
+        quicksort(l, pi-1, nums)  # Recursively sorting the left values
+        quicksort(pi+1, r, nums)  # Recursively sorting the right values
+    return nums
+ 
+ 
+example = [23,56,8,90]
+print(quicksort(0, len(example)-1, example))
+ 
